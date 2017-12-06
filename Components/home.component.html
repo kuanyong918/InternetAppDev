@@ -1,0 +1,105 @@
+﻿
+
+<div name="userNameDiv" align="center"> 
+    <br/>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <label for="username">Username</label>
+    <input #username type="email" name="username" required />
+</div>
+
+<div name="passwordDiv" align="center">
+    
+    <label for="password">Password</label>
+    <input #password type="password" name="password" required />
+</div>
+
+<div name="buttonDiv" align="center">
+    
+    <br />
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<button (click)="login(username.value, password.value)" class="btn btn-primary">Login</button>
+    {{clickMessage}}
+
+    <button (click)="addRegister()" class="btn btn-primary">Register</button>
+    {{msg}}
+</div>
+
+<div name="buttonDiv" align="center">
+   
+    <br />
+    <button (click)="forgotPassword()" class="btn btn-primary">Forgot Password</button>
+</div>
+<br/>   
+
+
+
+
+
+
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(registerFrm)" [formGroup]="registerFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">Registration</h4>
+        </modal-header>
+        <modal-body>
+
+            <div class="form-group">
+                <select formControlName="Role">
+                    <option id="superAdmin" value="superAdmin">superAdmin</option>
+                    <option id="buyerAdmin" value="buyerAdmin">BuyerAdmin</option>
+                    <option id="supplierAdmin" value="supplierAdmin">supplierAdmin</option>
+                    <option id="buyerUser" value="buyerUser">buyerUser</option>
+                    <option id="supplierUser" value="supplierUser">supplierUser</option>
+                </select>
+                <div>
+                    <span>Full name*</span>
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="Name">
+                </div>
+
+                <div>
+                    <span>Company name*</span>
+                    <input type="text" class="form-control" placeholder="Company Name" formControlName="CompanyName">
+                </div>
+                <div>
+                    <span>User name(Email)</span>
+                    <input type="email" class="form-control" placeholder="Email" formControlName="UserId">
+                </div>
+                <div>
+                    <span>Password</span>
+                    <input type="password" class="form-control" placeholder="*******" formControlName="Password">
+                </div>
+                <div>
+                    <span>Security Question</span>
+                    <select id="question" class="form-control">
+                        <option> </option>
+                        <option>Your Mother's Maiden Name</option>
+                    </select>
+                </div>
+                <div>
+                    <span>Security Answer</span>
+                    <input type="text" class="form-control" placeholder="" formControlName="SecurityAns">
+                </div>
+                <div>
+                    <span>Contact</span>
+                    <input type="text" class="form-control" placeholder="9876543210" formControlName="Contact">
+                </div>
+
+                <div>
+                    <span>Address</span>
+                    <input type="text" class="form-control" placeholder="Address" formControlName="Address">
+                </div>
+
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="registerFrm.invalid" class="btn btn-primary">Register</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>

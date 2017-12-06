@@ -1,0 +1,56 @@
+﻿<script src="node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.system.js"></script>
+
+<div>
+    <label style="color: #ffffff; font-family:'Exo',serif; font-weight: bold; font-size:30px">Sun & Star Marketplace</label>
+</div>
+<div align="center" class="alert alert-info" role="alert" *ngIf="items == null" style="width: 50%; margin: 0 auto;">Your shopping cart is empty! <div align="right"><button style="background-color:whitesmoke; color:#585a69" class="btn btn-primary" (click)="productNav()">Return to Products Page</button></div></div>   
+
+<div class='panel panel-primary'*ngIf="items !== null">
+    
+    <div >
+       <div *ngIf="items">
+    <h2>Welcome to your cart, {{items.userName}}</h2>
+</div>
+      
+  </div>
+    <div class='order'>
+        <div class='panel-body'>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Description</th>
+                        <th>Supplier</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items?.productItemList">
+                        
+                        <td>{{item.product.MaterialID}}</td>
+                        <td>{{item.product.Price | currency:'USD':true:'1.2-2'}}</td>
+                        <td>{{item.product.Description}}</td>
+                        <td>{{item.product.SupplierName}}</td>
+                        <td>{{ item.Quantity }}</td>
+                        <td>{{ item.SubTotal | currency:'USD':true:'1.2-2' }}</td>
+                       
+                    </tr>
+
+                </tbody>
+
+            </table>
+            Total: 
+        </div>
+    </div>
+    <div style="padding-bottom:10px"> 
+    <button id="print" class="btn btn-danger" (click)="purge()">Purge Cart</button></div>
+    <div align="center" style="padding-bottom:10px"><button class="btn btn-primary" (click)="orderNav()">Purchase Products</button>  </div>   
+    </div>
+
+
+
+

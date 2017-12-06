@@ -1,0 +1,87 @@
+﻿<script src="node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.system.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+<body>
+    <div [hidden]="msg" style="padding:10px" align="center" class="alert alert-info" role="alert">You are almost there, please finalize your order</div>
+    <div [hidden]="msg" style="padding:10px" align="center"><button  (click)="addOrder();clearLS()" class="btn btn-primary">Finalize Order</button></div>
+
+    <div align="center" style="padding:10px" *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{msg}} <br />
+        Your purchase order number is {{msg2}}
+    </div>
+
+   
+</body>
+</html>
+
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(orderFrm)" [formGroup]="orderFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+            <div>
+                <div style="display:none;" class="form-group">
+                    <div>
+                        <span>PO Number</span>
+                        <input type="text" class="form-control" formControlName="orderId" id="orderId1">
+                    </div>
+                    <div>
+                        <span>User Id</span>
+                        <input type="text" class="form-control" formControlName="userId" id="userId1">
+                    </div>
+                    <div>
+                        <span>User Name</span>
+                        <input type="text" class="form-control" formControlName="userName" id="userName1">
+                    </div>
+                    <div>
+                        <span>Product List Added</span>
+                        <input type="text" class="form-control" formControlName="productItemList" id="productItemList1">
+                    </div>
+                </div>
+                <div><h2>Your Summary</h2></div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Description</th>
+                            <th>Supplier</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of currentOrder?.productItemList">
+                            <td>{{item.product.MaterialID}}</td>
+                            <td>{{item.product.Price | currency:'USD':true:'1.2-2'}}</td>
+                            <td>{{item.product.Description}}</td>
+                            <td>{{item.product.SupplierName}}</td>
+                            <td>{{ item.Quantity }}</td>
+                            <td>{{ item.SubTotal | currency:'USD':true:'1.2-2' }}</td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+               <!-- <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>-->
+                <button type="submit" [disabled]="orderFrm.invalid" class="btn btn-primary" (click)="modal.dismiss()">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>

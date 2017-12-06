@@ -1,0 +1,122 @@
+﻿<script src="node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.system.js"></script>
+
+<div>
+    <label style="color: #ffffff; font-family:'Exo',serif; font-weight: bold; font-size:30px">Sun & Star Marketplace</label>
+</div>
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        User Management
+    </div>
+    <div class='panel-body'>
+        <div class='table-responsive'>
+            <div style="display: inline;">
+                <search-list [title]='searchTitle' (change)="criteriaChange($event)"></search-list>
+                <div align="right"><button class="btn btn-primary" (click)="logout()">Logout</button></div>
+            </div>
+                <div *ngIf="valid; then thenBlock else elseBlock" style="padding-bottom:10px"> </div>
+
+                <ng-template #thenBlock><button class="btn btn-primary" (click)="addRegister()">Add</button></ng-template>
+                <ng-template #elseBlock></ng-template>
+                <div class="alert alert-info" role="alert" *ngIf="indLoading"><img src="../../images/loading.gif" width="32" height="32" /> Loading...</div>
+                <div *ngIf='registers && registers.length==0' class="alert alert-info" role="alert">No record found!</div>
+                <table class='table table-striped' *ngIf='registers && registers.length'>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>UserId</th>
+                            <th>Password</th>
+                            <th>Company Name</th>
+                            <th>Security Answer</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let register of registers | userFilter:listFilter">
+                            <td>{{register.Id}}</td>
+                            <td>{{register.Name}}</td>
+                            <td>{{register.Role}}</td>
+                            <td>{{register.UserId}}</td>
+                            <td>{{register.Password}}</td>
+                            <td>{{register.CompanyName}}</td>
+                            <td>{{register.SecurityAns}}</td>
+                            <td>{{register.Contact}}</td>
+                            <td>{{register.Address}}</td>
+                            <td>
+                                <div *ngIf="valid; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button title="Edit" class="btn btn-primary" (click)="editRegister(register.Id)">Edit</button>
+                                    <button title="Delete" class="btn btn-danger" (click)="deleteRegister(register.Id)">Delete</button>
+                                </ng-template>
+                                <ng-template #elseBlock></ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                </div>
+</div>
+        <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{msg}}
+        </div>
+    </div>
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(registerFrm)" [formGroup]="registerFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+
+            <div class="form-group">
+                <div>
+                    <span>Full name*</span>
+                    <input type="text" class="form-control" placeholder="Name" formControlName="Name">
+                </div>
+                <div>
+                    <span>User role</span>
+                    <input type="text" class="form-control" placeholder="Role" formControlName="Role">
+                </div>
+                <div>
+                    <span>UserId</span>
+                    <input type="text" class="form-control" placeholder="UserId" formControlName="UserId">
+                </div>
+                <div>
+                    <span>Password</span>
+                    <input type="text" class="form-control" placeholder="Password" formControlName="Password">
+                </div>
+                <div>
+                    <span>Company</span>
+                    <input type="text" class="form-control" placeholder="Company" formControlName="CompanyName">
+                </div>
+                <div>
+                    <span>Security Answer</span>
+                    <input type="text" class="form-control" placeholder="Security Answer" formControlName="SecurityAns">
+                </div>
+                <div>
+                    <span>Contact</span>
+                    <input type="text" class="form-control" placeholder="Contact" formControlName="Contact">
+                </div>
+                <div>
+                    <span>Address</span>
+                    <input type="text" class="form-control" placeholder="Address" formControlName="Address">
+                </div>
+               
+               
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="registerFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>
